@@ -1,113 +1,1215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pratham K Gujjar | Portfolio</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body data-bs-spy="scroll" data-bs-target="#navbar">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pratham K Gujjar — ML Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#060b18;--bg2:#0a1628;--bg3:#0f1d35;
+--accent:#0ea5e9;--accent2:#06d6a0;--accent3:#ff6b6b;--accent4:#ffd93d;
+--barracuda:#0078d4;--barracuda-dark:#0d2137;--barracuda-teal:#00b4d8;--barracuda-navy:#003366;
+--drdo-green:#2d6a4f;--drdo-saffron:#ff9933;
+--text:#e8edf5;--text2:#94a3b8;--text3:#4a5568;
+--gradient:linear-gradient(135deg,#0078d4,#00b4d8,#06d6a0);
+--gradient2:linear-gradient(135deg,#ff6b6b,#ffd93d);
+--gradient-barracuda:linear-gradient(135deg,#003366,#0078d4,#00b4d8);
+--glass:rgba(255,255,255,0.03);--glass-border:rgba(255,255,255,0.06);
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:default}
+::selection{background:var(--barracuda);color:#fff}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--barracuda-teal);border-radius:3px}
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" id="navbar">
-  <div class="container">
-    <a class="navbar-brand" href="#">Pratham K Gujjar</a>
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="menu">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-        <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
-        <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-      </ul>
-    </div>
+/* CURSOR GLOW */
+.cursor-glow{position:fixed;width:600px;height:600px;border-radius:50%;pointer-events:none;z-index:0;
+background:radial-gradient(circle,rgba(0,120,212,0.06) 0%,transparent 70%);
+transform:translate(-50%,-50%);transition:opacity .3s}
+
+/* LOADER */
+.loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s,visibility .8s}
+.loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loader-logo{position:relative;width:100px;height:100px;margin-bottom:2rem}
+.loader-ring{position:absolute;inset:0;border-radius:50%;border:2px solid transparent;
+border-top-color:var(--barracuda);animation:spinRing 1.2s linear infinite}
+.loader-ring:nth-child(2){inset:8px;border-top-color:var(--barracuda-teal);animation-duration:1.8s;animation-direction:reverse}
+.loader-ring:nth-child(3){inset:16px;border-top-color:var(--accent2);animation-duration:2.4s}
+.loader-initials{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;
+background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+@keyframes spinRing{to{transform:rotate(360deg)}}
+.loader-text{font-size:.8rem;color:var(--text3);text-transform:uppercase;letter-spacing:4px;
+animation:pulseText 1.5s ease-in-out infinite}
+@keyframes pulseText{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* WATER CANVAS */
+#waterCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4}
+
+/* PARTICLES */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;
+background:rgba(6,11,24,0.7);backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-border);
+transform:translateY(-100%);animation:slideNavIn .8s 2.5s ease forwards}
+@keyframes slideNavIn{to{transform:translateY(0)}}
+.nav-logo{font-family:'Playfair Display',serif;font-weight:900;font-size:1.4rem;
+background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+display:flex;align-items:center;gap:.6rem}
+.nav-logo-bar{width:24px;height:3px;background:var(--gradient);border-radius:2px}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:1px;
+text-transform:uppercase;position:relative;transition:color .3s;padding:.3rem 0}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;
+background:var(--gradient);transition:width .3s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a:hover::after{width:100%}
+.nav-status{display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:var(--barracuda-teal);
+padding:.4rem 1rem;background:rgba(0,180,216,0.08);border:1px solid rgba(0,180,216,0.15);border-radius:100px}
+.nav-status .dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:0 8vw;overflow:hidden}
+.hero-bg-grid{position:absolute;inset:0;
+background-image:linear-gradient(rgba(0,120,212,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,120,212,0.04) 1px,transparent 1px);
+background-size:60px 60px;opacity:0;animation:fadeIn 2s 2.8s ease forwards}
+.hero-bg-gradient{position:absolute;top:-40%;right:-20%;width:900px;height:900px;border-radius:50%;
+background:radial-gradient(circle,rgba(0,120,212,0.1) 0%,transparent 70%);
+animation:floatBlob 8s ease-in-out infinite}
+.hero-bg-gradient2{position:absolute;bottom:-30%;left:-10%;width:700px;height:700px;border-radius:50%;
+background:radial-gradient(circle,rgba(0,180,216,0.06) 0%,transparent 70%);
+animation:floatBlob 10s 2s ease-in-out infinite reverse}
+.hero-bg-gradient3{position:absolute;top:20%;left:40%;width:500px;height:500px;border-radius:50%;
+background:radial-gradient(circle,rgba(6,214,160,0.04) 0%,transparent 70%);
+animation:floatBlob 12s 4s ease-in-out infinite}
+@keyframes floatBlob{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-40px) scale(1.1)}}
+
+.hero-inner{display:flex;align-items:center;gap:6rem;position:relative;z-index:2;width:100%}
+.hero-content{flex:1;max-width:650px}
+.hero-photo-wrapper{flex-shrink:0;position:relative;
+opacity:0;transform:scale(.8) translateY(30px);animation:photoReveal 1.2s 3s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes photoReveal{to{opacity:1;transform:scale(1) translateY(0)}}
+
+.hero-photo{position:relative;width:340px;height:420px}
+.hero-photo-img{width:100%;height:100%;object-fit:cover;border-radius:24px;position:relative;z-index:2;
+filter:brightness(1.05) contrast(1.05);transition:all .6s}
+.hero-photo:hover .hero-photo-img{transform:scale(1.02);filter:brightness(1.1) contrast(1.1)}
+.hero-photo-border{position:absolute;inset:-4px;border-radius:28px;
+background:var(--gradient);z-index:1;animation:rotateBorder 6s linear infinite}
+@keyframes rotateBorder{
+0%{background:linear-gradient(0deg,#003366,#0078d4,#00b4d8,#06d6a0)}
+25%{background:linear-gradient(90deg,#003366,#0078d4,#00b4d8,#06d6a0)}
+50%{background:linear-gradient(180deg,#003366,#0078d4,#00b4d8,#06d6a0)}
+75%{background:linear-gradient(270deg,#003366,#0078d4,#00b4d8,#06d6a0)}
+100%{background:linear-gradient(360deg,#003366,#0078d4,#00b4d8,#06d6a0)}
+}
+.hero-photo-glow{position:absolute;inset:-40px;border-radius:50%;
+background:radial-gradient(circle,rgba(0,120,212,0.15) 0%,transparent 70%);
+z-index:0;animation:pulseGlow 3s ease-in-out infinite}
+@keyframes pulseGlow{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+.hero-photo-badge{position:absolute;bottom:20px;right:-20px;z-index:3;padding:.6rem 1.2rem;
+background:var(--gradient-barracuda);border-radius:12px;font-size:.75rem;font-weight:700;color:#fff;
+letter-spacing:.5px;box-shadow:0 8px 30px rgba(0,120,212,0.3);
+display:flex;align-items:center;gap:.5rem;animation:badgeBounce 2s 3.5s ease infinite}
+@keyframes badgeBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.hero-photo-dots{position:absolute;top:-20px;left:-20px;z-index:0;display:grid;grid-template-columns:repeat(5,8px);gap:8px}
+.hero-photo-dots span{width:8px;height:8px;border-radius:50%;background:rgba(0,120,212,0.15);
+animation:dotPulse 3s ease-in-out infinite}
+.hero-photo-dots span:nth-child(odd){animation-delay:.5s}
+@keyframes dotPulse{0%,100%{opacity:.3}50%{opacity:.8}}
+
+.hero-tag{display:inline-flex;align-items:center;gap:.6rem;padding:.5rem 1.2rem;
+background:rgba(0,120,212,0.08);border:1px solid rgba(0,120,212,0.2);border-radius:100px;
+font-size:.8rem;color:var(--barracuda-teal);font-weight:500;margin-bottom:2rem;
+opacity:0;transform:translateY(20px);animation:fadeSlideUp .8s 2.8s ease forwards}
+.hero-tag .line{width:20px;height:1px;background:var(--barracuda-teal)}
+.hero-name{font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:900;
+line-height:1.05;margin-bottom:1.5rem}
+.hero-name .word{display:inline-block;opacity:0;transform:translateY(80px) rotateX(-40deg);
+animation:revealWord .8s ease forwards}
+.hero-name .word:nth-child(1){animation-delay:3s}
+.hero-name .word:nth-child(2){animation-delay:3.15s}
+.hero-name .word:nth-child(3){animation-delay:3.3s}
+.hero-name .gradient-text{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+@keyframes revealWord{to{opacity:1;transform:translateY(0) rotateX(0)}}
+.hero-title{font-size:clamp(1rem,2vw,1.3rem);color:var(--text2);font-weight:300;line-height:1.7;
+max-width:580px;margin-bottom:2.5rem;
+opacity:0;transform:translateY(30px);animation:fadeSlideUp 1s 3.5s ease forwards}
+.hero-title strong{color:var(--text);font-weight:600}
+.hero-title .barracuda-text{color:var(--barracuda);font-weight:600}
+@keyframes fadeSlideUp{to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{to{opacity:1}}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;
+opacity:0;transform:translateY(30px);animation:fadeSlideUp 1s 3.7s ease forwards}
+.btn{display:inline-flex;align-items:center;gap:.6rem;padding:.85rem 2rem;border-radius:12px;
+font-size:.85rem;font-weight:600;text-decoration:none;transition:all .4s;cursor:pointer;border:none;font-family:inherit}
+.btn-primary{background:var(--gradient);color:#fff;position:relative;overflow:hidden;
+box-shadow:0 4px 20px rgba(0,120,212,0.3)}
+.btn-primary::before{content:'';position:absolute;inset:0;
+background:linear-gradient(135deg,#06d6a0,#00b4d8,#0078d4);opacity:0;transition:opacity .4s}
+.btn-primary:hover{box-shadow:0 8px 40px rgba(0,120,212,0.4);transform:translateY(-2px)}
+.btn-primary:hover::before{opacity:1}
+.btn-primary span{position:relative;z-index:1}
+.btn-outline{background:transparent;color:var(--text);border:1px solid rgba(0,120,212,0.3);border-radius:12px}
+.btn-outline:hover{border-color:var(--barracuda);color:var(--barracuda-teal);
+background:rgba(0,120,212,0.05);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);
+display:flex;flex-direction:column;align-items:center;gap:.8rem;
+opacity:0;animation:fadeIn 1s 4s ease forwards}
+.hero-scroll span{font-size:.65rem;text-transform:uppercase;letter-spacing:3px;color:var(--text3)}
+.scroll-line{width:1px;height:40px;background:var(--bg3);position:relative;overflow:hidden}
+.scroll-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;
+background:var(--gradient);animation:scrollDown 2s ease-in-out infinite}
+@keyframes scrollDown{0%{top:-100%}50%{top:100%}100%{top:100%}}
+
+/* WAVE DIVIDER */
+.wave-divider{position:relative;z-index:2;margin-top:-2px}
+.wave-divider svg{display:block;width:100%}
+.wave-divider path{fill:var(--bg)}
+.wave-divider-flip{transform:rotate(180deg)}
+
+/* COMPANIES STRIP */
+.companies-strip{padding:5rem 8vw;position:relative;z-index:2;
+background:linear-gradient(180deg,rgba(0,120,212,0.03) 0%,var(--bg) 100%)}
+.companies-label{text-align:center;font-size:.7rem;text-transform:uppercase;letter-spacing:4px;
+color:var(--text3);margin-bottom:3rem;font-weight:600}
+.companies-grid{display:flex;align-items:center;justify-content:center;gap:4rem;flex-wrap:wrap}
+.company-badge{display:flex;flex-direction:column;align-items:center;gap:.8rem;
+padding:1.5rem 2.5rem;border-radius:16px;border:1px solid var(--glass-border);
+background:var(--glass);transition:all .5s;cursor:default;min-width:180px}
+.company-badge:hover{transform:translateY(-8px);border-color:rgba(0,120,212,0.2);
+box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.company-badge.barracuda-badge:hover{border-color:rgba(0,120,212,0.4);
+box-shadow:0 20px 60px rgba(0,120,212,0.15)}
+.company-badge.drdo-badge:hover{border-color:rgba(45,106,79,0.4);
+box-shadow:0 20px 60px rgba(45,106,79,0.15)}
+.company-logo-text{font-size:1.1rem;font-weight:800;letter-spacing:1px}
+.company-logo-text.barracuda-color{color:var(--barracuda)}
+.company-logo-text.drdo-color{color:var(--drdo-green)}
+.company-logo-text.resolute-color{color:#8b5cf6}
+.company-role{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
+.company-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.company-icon.barracuda-icon{background:rgba(0,120,212,0.12);border:1px solid rgba(0,120,212,0.2)}
+.company-icon.drdo-icon{background:rgba(45,106,79,0.12);border:1px solid rgba(45,106,79,0.2)}
+.company-icon.resolute-icon{background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.2)}
+
+/* STATS BAR */
+.stats-bar{padding:4rem 8vw;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;position:relative;z-index:2;
+background:var(--barracuda-dark);border-top:1px solid rgba(0,120,212,0.1);border-bottom:1px solid rgba(0,120,212,0.1)}
+.stat{text-align:center;padding:1.5rem;position:relative}
+.stat::after{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;
+background:linear-gradient(transparent,rgba(0,180,216,0.15),transparent)}
+.stat:last-child::after{display:none}
+.stat-number{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:900;
+background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-top:.5rem}
+
+/* SECTIONS */
+section{padding:8rem 8vw;position:relative;z-index:2}
+.section-header{margin-bottom:4rem}
+.section-tag{display:inline-flex;align-items:center;gap:.6rem;font-size:.7rem;color:var(--barracuda-teal);
+text-transform:uppercase;letter-spacing:3px;font-weight:600;margin-bottom:1rem}
+.section-tag .num{font-family:'JetBrains Mono',monospace;color:var(--text3)}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.2}
+.section-title .highlight{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.about-text{font-size:1.05rem;line-height:1.9;color:var(--text2)}
+.about-text p{margin-bottom:1.5rem}
+.about-text strong{color:var(--text);font-weight:600}
+.about-text .company-inline{font-weight:700;padding:.1rem .5rem;border-radius:4px;font-size:.95rem}
+.about-text .barracuda-inline{color:var(--barracuda);background:rgba(0,120,212,0.1)}
+.about-text .drdo-inline{color:var(--drdo-saffron);background:rgba(255,153,51,0.1)}
+.about-info{display:grid;gap:1.2rem}
+.info-card{padding:1.3rem 1.8rem;background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;
+transition:all .4s;position:relative;overflow:hidden}
+.info-card::before{content:'';position:absolute;inset:0;background:var(--gradient);opacity:0;transition:opacity .4s}
+.info-card:hover{border-color:rgba(0,120,212,0.2);transform:translateY(-3px)}
+.info-card:hover::before{opacity:.03}
+.info-card-label{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text3);margin-bottom:.3rem;position:relative}
+.info-card-value{font-size:.95rem;font-weight:600;color:var(--text);position:relative}
+.info-card-value a{color:var(--barracuda-teal);text-decoration:none;transition:color .3s}
+.info-card-value a:hover{color:var(--barracuda)}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.skill-category{padding:2.2rem;background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;
+position:relative;overflow:hidden;transition:all .5s}
+.skill-category::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+background:var(--gradient);transform:scaleX(0);transform-origin:left;transition:transform .6s}
+.skill-category:hover::before{transform:scaleX(1)}
+.skill-category:hover{border-color:rgba(0,120,212,0.2);transform:translateY(-6px);
+box-shadow:0 20px 60px rgba(0,120,212,0.06)}
+.skill-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+font-size:1.3rem;margin-bottom:1.2rem}
+.skill-icon.blue{background:linear-gradient(135deg,rgba(0,120,212,0.15),rgba(0,180,216,0.15));border:1px solid rgba(0,120,212,0.2)}
+.skill-icon.green{background:linear-gradient(135deg,rgba(6,214,160,0.15),rgba(0,180,216,0.15));border:1px solid rgba(6,214,160,0.2)}
+.skill-icon.purple{background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(0,120,212,0.15));border:1px solid rgba(139,92,246,0.2)}
+.skill-icon.teal{background:linear-gradient(135deg,rgba(0,180,216,0.15),rgba(6,214,160,0.15));border:1px solid rgba(0,180,216,0.2)}
+.skill-cat-title{font-size:1rem;font-weight:700;margin-bottom:1rem;color:var(--text)}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.skill-tag{padding:.35rem .9rem;background:rgba(0,120,212,0.06);border:1px solid rgba(0,120,212,0.12);
+border-radius:8px;font-size:.78rem;color:var(--barracuda-teal);font-weight:500;
+transition:all .3s;cursor:default}
+.skill-tag:hover{background:rgba(0,120,212,0.12);border-color:var(--barracuda);color:var(--text);transform:translateY(-2px)}
+
+/* EXPERIENCE TIMELINE */
+.timeline{position:relative;max-width:900px}
+.timeline::before{content:'';position:absolute;left:24px;top:0;bottom:0;width:2px;
+background:linear-gradient(to bottom,var(--barracuda),var(--barracuda-teal),var(--accent2),var(--drdo-green),#8b5cf6)}
+.timeline-item{position:relative;padding-left:70px;margin-bottom:3.5rem}
+.timeline-dot{position:absolute;left:14px;top:8px;width:22px;height:22px;border-radius:50%;
+background:var(--bg);display:flex;align-items:center;justify-content:center;transition:all .4s;z-index:2}
+.timeline-dot.barracuda-dot{border:2px solid var(--barracuda)}
+.timeline-dot.barracuda-dot::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--barracuda);transition:all .4s}
+.timeline-dot.drdo-dot{border:2px solid var(--drdo-green)}
+.timeline-dot.drdo-dot::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--drdo-green);transition:all .4s}
+.timeline-dot.resolute-dot{border:2px solid #8b5cf6}
+.timeline-dot.resolute-dot::after{content:'';width:8px;height:8px;border-radius:50%;background:#8b5cf6;transition:all .4s}
+.timeline-item:hover .timeline-dot{box-shadow:0 0 20px currentColor}
+.timeline-item:hover .timeline-dot::after{transform:scale(1.4)}
+
+.timeline-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:2rem;
+transition:all .5s;position:relative;overflow:hidden}
+.timeline-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:3px;transition:height .4s}
+.timeline-card.barracuda-card::before{background:var(--gradient-barracuda)}
+.timeline-card.drdo-card::before{background:linear-gradient(to bottom,var(--drdo-saffron),var(--drdo-green))}
+.timeline-card.resolute-card::before{background:linear-gradient(to bottom,#8b5cf6,#06d6a0)}
+.timeline-card:hover{border-color:rgba(0,120,212,0.15);box-shadow:0 10px 40px rgba(0,0,0,0.3);transform:translateX(6px)}
+
+.timeline-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+.timeline-date{display:inline-flex;padding:.3rem .8rem;border-radius:8px;font-size:.7rem;font-weight:600;
+font-family:'JetBrains Mono',monospace}
+.timeline-date.barracuda-date{background:rgba(0,120,212,0.1);border:1px solid rgba(0,120,212,0.2);color:var(--barracuda)}
+.timeline-date.drdo-date{background:rgba(45,106,79,0.1);border:1px solid rgba(45,106,79,0.2);color:var(--drdo-green)}
+.timeline-date.resolute-date{background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);color:#8b5cf6}
+.timeline-company-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.25rem .8rem;
+border-radius:6px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.timeline-company-badge.barracuda-badge-sm{background:rgba(0,120,212,0.1);color:var(--barracuda);border:1px solid rgba(0,120,212,0.2)}
+.timeline-company-badge.drdo-badge-sm{background:rgba(45,106,79,0.1);color:var(--drdo-green);border:1px solid rgba(45,106,79,0.2)}
+.timeline-company-badge.resolute-badge-sm{background:rgba(139,92,246,0.1);color:#8b5cf6;border:1px solid rgba(139,92,246,0.2)}
+.timeline-role{font-size:1.4rem;font-weight:800;margin-bottom:.2rem}
+.timeline-company{font-size:.95rem;font-weight:600;margin-bottom:.2rem}
+.timeline-company.barracuda-name{color:var(--barracuda)}
+.timeline-company.drdo-name{color:var(--drdo-saffron)}
+.timeline-company.resolute-name{color:#8b5cf6}
+.timeline-location{font-size:.8rem;color:var(--text3);margin-bottom:1rem;display:flex;align-items:center;gap:.4rem}
+.timeline-desc{list-style:none;display:grid;gap:.7rem}
+.timeline-desc li{position:relative;padding-left:1.5rem;font-size:.9rem;line-height:1.7;color:var(--text2)}
+.timeline-desc li::before{content:'';position:absolute;left:0;top:.7em;width:6px;height:6px;border-radius:50%}
+.timeline-card.barracuda-card .timeline-desc li::before{background:var(--barracuda)}
+.timeline-card.drdo-card .timeline-desc li::before{background:var(--drdo-green)}
+.timeline-card.resolute-card .timeline-desc li::before{background:#8b5cf6}
+
+/* WATER WAVE SECTION BG */
+.section-water{position:relative;overflow:hidden}
+.section-water::before{content:'';position:absolute;top:0;left:-50%;right:-50%;height:100%;
+background:repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(0,120,212,0.01) 40px,rgba(0,120,212,0.01) 80px);
+animation:waterShift 8s linear infinite}
+@keyframes waterShift{0%{transform:translateX(0)}100%{transform:translateX(80px)}}
+
+/* EDUCATION */
+.edu-cards{display:grid;gap:1.5rem}
+.edu-card{display:grid;grid-template-columns:auto 1fr;gap:2rem;padding:2.2rem;
+background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;
+transition:all .5s;align-items:center}
+.edu-card:hover{border-color:rgba(0,120,212,0.2);transform:translateY(-4px);
+box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+.edu-icon{width:56px;height:56px;border-radius:14px;background:var(--gradient);display:flex;align-items:center;justify-content:center;
+font-size:1.5rem}
+.edu-degree{font-size:1.15rem;font-weight:700;margin-bottom:.3rem}
+.edu-school{color:var(--barracuda-teal);font-weight:500;margin-bottom:.3rem;font-size:.95rem}
+.edu-year{font-size:.75rem;color:var(--text3);font-family:'JetBrains Mono',monospace}
+
+/* CERTIFICATIONS */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
+.cert-card{padding:1.8rem;background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;
+transition:all .5s;position:relative;overflow:hidden}
+.cert-card::after{content:'';position:absolute;top:-50%;right:-50%;width:100%;height:100%;
+background:radial-gradient(circle,rgba(0,120,212,0.04) 0%,transparent 70%);
+transition:all .6s;opacity:0}
+.cert-card:hover{border-color:rgba(0,120,212,0.2);transform:translateY(-5px)}
+.cert-card:hover::after{opacity:1;top:-20%;right:-20%}
+.cert-badge{display:inline-flex;padding:.25rem .7rem;border-radius:6px;font-size:.6rem;font-weight:700;
+text-transform:uppercase;letter-spacing:1px;margin-bottom:.8rem;position:relative}
+.cert-badge.azure{background:rgba(0,120,215,0.15);color:#0078d7}
+.cert-badge.nvidia{background:rgba(118,185,0,0.15);color:#76b900}
+.cert-badge.isro{background:rgba(255,165,0,0.15);color:#ffa500}
+.cert-badge.hack{background:rgba(255,107,107,0.15);color:var(--accent3)}
+.cert-name{font-size:.95rem;font-weight:700;margin-bottom:.4rem;position:relative}
+.cert-date{font-size:.75rem;color:var(--text3);font-family:'JetBrains Mono',monospace;position:relative}
+
+/* ACTIVITIES */
+.activities-list{display:grid;gap:.8rem;max-width:700px}
+.activity-item{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.5rem;
+background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;
+transition:all .4s;gap:1rem}
+.activity-item:hover{border-color:rgba(0,120,212,0.2);transform:translateX(8px);
+background:rgba(0,120,212,0.03)}
+.activity-name{font-weight:600;font-size:.9rem}
+.activity-period{font-size:.75rem;color:var(--text3);font-family:'JetBrains Mono',monospace;white-space:nowrap}
+
+/* CONTACT */
+.contact-section{text-align:center;background:linear-gradient(180deg,var(--bg),var(--barracuda-dark))}
+.contact-section .section-header{display:flex;flex-direction:column;align-items:center}
+.contact-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+.contact-card{padding:2rem 2.5rem;background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;
+text-decoration:none;color:var(--text);transition:all .5s;min-width:200px;text-align:center}
+.contact-card:hover{border-color:rgba(0,120,212,0.3);transform:translateY(-8px);
+box-shadow:0 20px 60px rgba(0,120,212,0.1)}
+.contact-card-icon{font-size:1.6rem;margin-bottom:.6rem}
+.contact-card-label{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text3);margin-bottom:.3rem}
+.contact-card-value{font-size:.9rem;font-weight:600;color:var(--barracuda-teal)}
+
+/* FOOTER */
+footer{padding:3rem 8vw;text-align:center;
+background:var(--barracuda-dark);border-top:1px solid rgba(0,120,212,0.1);position:relative;z-index:2}
+footer p{font-size:.75rem;color:var(--text3)}
+footer .heart{color:var(--accent3);display:inline-block;animation:heartbeat 1.5s ease infinite}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.footer-wave{display:flex;justify-content:center;gap:.3rem;margin-bottom:1rem}
+.footer-wave span{display:block;width:3px;height:12px;background:var(--barracuda);border-radius:2px;
+animation:waveBar 1.2s ease-in-out infinite}
+.footer-wave span:nth-child(2){animation-delay:.1s;height:18px}
+.footer-wave span:nth-child(3){animation-delay:.2s;height:24px}
+.footer-wave span:nth-child(4){animation-delay:.3s;height:18px}
+.footer-wave span:nth-child(5){animation-delay:.4s}
+@keyframes waveBar{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.4)}}
+
+/* MARQUEE */
+.marquee-wrapper{overflow:hidden;padding:2.5rem 0;
+background:var(--barracuda-dark);border-top:1px solid rgba(0,120,212,0.08);
+border-bottom:1px solid rgba(0,120,212,0.08);position:relative;z-index:2}
+.marquee{display:flex;gap:3rem;animation:marquee 30s linear infinite;white-space:nowrap}
+.marquee span{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,2.5vw,2.5rem);font-weight:900;
+color:rgba(0,120,212,0.1);transition:color .3s}
+.marquee span:hover{color:var(--barracuda)}
+.marquee .dot{color:var(--barracuda-teal);font-size:.4em;vertical-align:middle;margin:0 .5rem;opacity:.3}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SCROLL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(50px);transition:all 1s cubic-bezier(0.16,1,0.3,1)}
+.reveal.active{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-50px);transition:all 1s cubic-bezier(0.16,1,0.3,1)}
+.reveal-left.active{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(50px);transition:all 1s cubic-bezier(0.16,1,0.3,1)}
+.reveal-right.active{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(0.85);transition:all 1s cubic-bezier(0.16,1,0.3,1)}
+.reveal-scale.active{opacity:1;transform:scale(1)}
+
+/* FLOATING SHAPES */
+.floating-shapes{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.floating-shape{position:absolute;border-radius:50%;opacity:.025}
+.floating-shape:nth-child(1){width:400px;height:400px;background:var(--barracuda);top:10%;left:80%;
+animation:floatShape 25s linear infinite}
+.floating-shape:nth-child(2){width:250px;height:250px;background:var(--barracuda-teal);top:60%;left:5%;
+animation:floatShape 30s -5s linear infinite reverse}
+.floating-shape:nth-child(3){width:180px;height:180px;background:var(--accent2);top:80%;left:65%;
+animation:floatShape 22s -10s linear infinite}
+@keyframes floatShape{
+0%{transform:translate(0,0) rotate(0deg)}
+25%{transform:translate(50px,-80px) rotate(90deg)}
+50%{transform:translate(-30px,-120px) rotate(180deg)}
+75%{transform:translate(-60px,-40px) rotate(270deg)}
+100%{transform:translate(0,0) rotate(360deg)}
+}
+
+/* TILT CARDS */
+.tilt-card{transform-style:preserve-3d;perspective:1000px}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .hero-inner{flex-direction:column-reverse;text-align:center;gap:3rem}
+  .hero-content{max-width:100%}
+  .hero-title{max-width:100%}
+  .hero-cta{justify-content:center}
+  .hero-photo{width:260px;height:320px}
+  .hero-tag{margin:0 auto 2rem}
+}
+@media(max-width:968px){
+  .about-grid{grid-template-columns:1fr}
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .stat::after{display:none}
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  section{padding:5rem 5vw}
+  .companies-grid{gap:1.5rem}
+  .company-badge{min-width:140px;padding:1rem 1.5rem}
+}
+@media(max-width:600px){
+  .stats-bar{grid-template-columns:1fr 1fr}
+  .hero{padding:0 5vw}
+  .contact-links{flex-direction:column;align-items:center}
+  .hero-photo{width:220px;height:280px}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR GLOW -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- FLOATING SHAPES -->
+<div class="floating-shapes">
+  <div class="floating-shape"></div>
+  <div class="floating-shape"></div>
+  <div class="floating-shape"></div>
+</div>
+
+<!-- PARTICLES -->
+<canvas id="particles"></canvas>
+
+<!-- WATER CANVAS -->
+<canvas id="waterCanvas"></canvas>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-logo">
+    <div class="loader-ring"></div>
+    <div class="loader-ring"></div>
+    <div class="loader-ring"></div>
+    <div class="loader-initials">PKG</div>
   </div>
+  <div class="loader-text">Loading Experience</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-bar"></span>
+    PKG
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certifications">Credentials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-status"><span class="dot"></span> Available</div>
 </nav>
 
-<header class="bg-primary text-white text-center py-5">
-  <div class="container">
-    <h1 class="display-4" data-aos="fade-down">Hello, I'm Pratham</h1>
-    <p class="lead" data-aos="fade-up">AI/ML Engineer | Researcher | Developer</p>
-    <div class="social-icons mt-3">
-      <a href="https://github.com/savarander" class="text-white me-3"><i class="fab fa-github fa-lg"></i></a>
-      <a href="https://linkedin.com/in/pratham-k-gujjar" class="text-white"><i class="fab fa-linkedin fa-lg"></i></a>
-    </div>
-  </div>
-</header>
-
-<section id="skills" class="py-5">
-  <div class="container" data-aos="fade-right">
-    <h2 class="text-center mb-4">Skills</h2>
-    <div class="row text-center">
-      <div class="col-md-4">
-        <h5>Languages & Tools</h5>
-        <p>Python, C, MySQL, MongoDB, Git</p>
-      </div>
-      <div class="col-md-4">
-        <h5>Frameworks</h5>
-        <p>PyTorch, TensorFlow, Flask, Streamlit</p>
-      </div>
-      <div class="col-md-4">
-        <h5>Domains</h5>
-        <p>NLP, Image Processing, Geodata Analysis</p>
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-bg-gradient"></div>
+  <div class="hero-bg-gradient2"></div>
+  <div class="hero-bg-gradient3"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag"><span class="line"></span> Machine Learning Engineer @ Barracuda Networks</div>
+      <h1 class="hero-name">
+        <span class="word">Pratham</span><br>
+        <span class="word"><span class="gradient-text">K Gujjar</span></span>
+      </h1>
+      <p class="hero-title">
+        Engineering <strong>AI-driven security solutions</strong> at
+        <span class="barracuda-text">Barracuda Networks</span> — specializing in
+        <strong>NLP</strong>, <strong>GenAI</strong>, and <strong>Deep Learning</strong>
+        systems that protect enterprises worldwide.
+      </p>
+      <div class="hero-cta">
+        <a href="#experience" class="btn btn-primary"><span>View My Journey</span></a>
+        <a href="#contact" class="btn btn-outline">Let's Connect</a>
       </div>
     </div>
+    <div class="hero-photo-wrapper">
+      <div class="hero-photo">
+        <div class="hero-photo-glow"></div>
+        <div class="hero-photo-border"></div>
+        <img src="1788680190902.png" alt="Pratham K Gujjar" class="hero-photo-img">
+        <div class="hero-photo-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Barracuda Networks
+        </div>
+        <div class="hero-photo-dots">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
   </div>
 </section>
 
-<section id="experience" class="bg-light py-5">
-  <div class="container" data-aos="fade-left">
-    <h2 class="text-center mb-4">Experience</h2>
-    <ul class="timeline">
-      <li>
-        <strong>Project Trainee – DRDO (Feb 2025 - May 2025)</strong><br>
-        Researched on SAR image segmentation, implemented physics-based loss functions for data fusion.
-      </li>
-      <li>
-        <strong>Data Science Intern – Resolute AI (May 2024 - Nov 2024)</strong><br>
-        Worked on EDA, NLP, and dashboards with PowerBI and Streamlit.
-      </li>
-      <li>
-        <strong>Swasthya AI App (May 2023 - Dec 2023)</strong><br>
-        Built Flask + MongoDB platform for bio-medical NER-based EHR search.
-      </li>
-      <li>
-        <strong>Crime Detection using DCRNN (Mar 2024 - Jun 2024)</strong><br>
-        Developed crime recognition model using CNN + RNN on CCTV feeds.
-      </li>
-    </ul>
+<!-- WAVE DIVIDER -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="height:80px">
+    <path d="M0,40 C180,80 360,0 540,40 C720,80 900,0 1080,40 C1260,80 1440,20 1440,40 L1440,80 L0,80 Z"
+          fill="rgba(13,33,55,1)"/>
+  </svg>
+</div>
+
+<!-- COMPANIES STRIP -->
+<div class="companies-strip" style="background:var(--barracuda-dark)">
+  <div class="companies-label reveal">Trusted Organizations I've Contributed To</div>
+  <div class="companies-grid">
+    <div class="company-badge barracuda-badge reveal">
+      <div class="company-icon barracuda-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0078d4" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="company-logo-text barracuda-color">BARRACUDA</div>
+      <div class="company-role">Networks</div>
+    </div>
+    <div class="company-badge drdo-badge reveal">
+      <div class="company-icon drdo-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d6a4f" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+      <div class="company-logo-text drdo-color">DRDO</div>
+      <div class="company-role">CAIR</div>
+    </div>
+    <div class="company-badge reveal">
+      <div class="company-icon resolute-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <div class="company-logo-text resolute-color">RESOLUTE AI</div>
+      <div class="company-role">Softwares</div>
+    </div>
+  </div>
+</div>
+
+<!-- WAVE DIVIDER FLIP -->
+<div class="wave-divider wave-divider-flip">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="height:80px">
+    <path d="M0,40 C180,80 360,0 540,40 C720,80 900,0 1080,40 C1260,80 1440,20 1440,40 L1440,80 L0,80 Z"
+          fill="rgba(13,33,55,1)"/>
+  </svg>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrapper">
+  <div class="marquee" id="marquee">
+    <span>NLP</span><span class="dot">~</span>
+    <span>Deep Learning</span><span class="dot">~</span>
+    <span>MLOps</span><span class="dot">~</span>
+    <span>GenAI</span><span class="dot">~</span>
+    <span>Cybersecurity</span><span class="dot">~</span>
+    <span>Computer Vision</span><span class="dot">~</span>
+    <span>PyTorch</span><span class="dot">~</span>
+    <span>Threat Intelligence</span><span class="dot">~</span>
+    <span>NLP</span><span class="dot">~</span>
+    <span>Deep Learning</span><span class="dot">~</span>
+    <span>MLOps</span><span class="dot">~</span>
+    <span>GenAI</span><span class="dot">~</span>
+    <span>Cybersecurity</span><span class="dot">~</span>
+    <span>Computer Vision</span><span class="dot">~</span>
+    <span>PyTorch</span><span class="dot">~</span>
+    <span>Threat Intelligence</span><span class="dot">~</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat reveal">
+    <div class="stat-number" data-count="3">0+</div>
+    <div class="stat-label">Years Experience</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-number" data-count="4">0+</div>
+    <div class="stat-label">Organizations</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-number" data-count="10">0+</div>
+    <div class="stat-label">ML Models Deployed</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-number" data-count="5">0+</div>
+    <div class="stat-label">Certifications</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="section-water">
+  <div class="section-header reveal">
+    <div class="section-tag"><span class="num">01.</span> About Me</div>
+    <h2 class="section-title">Building <span class="highlight">Intelligent Systems</span><br>That Protect & Perform</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal-left">
+      <p>I'm a <strong>Machine Learning Engineer</strong> at <span class="company-inline barracuda-inline">Barracuda Networks</span>, where I architect and deploy production-grade ML solutions that enhance cybersecurity capabilities for enterprises worldwide.</p>
+      <p>My journey spans from conducting defense research at <span class="company-inline drdo-inline">DRDO (CAIR)</span> — working with satellite SAR data and physics-based deep learning models — to building <strong>GenAI-powered threat detection</strong> systems that protect organizations from sophisticated email-borne attacks.</p>
+      <p>I specialize in bridging the gap between <strong>cutting-edge AI research</strong> and <strong>real-world enterprise applications</strong>, with a particular focus on NLP, Agentic AI systems, and MLOps pipelines that scale.</p>
+    </div>
+    <div class="about-info reveal-right">
+      <div class="info-card">
+        <div class="info-card-label">Name</div>
+        <div class="info-card-value">Pratham K Gujjar</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Current Role</div>
+        <div class="info-card-value">Machine Learning Engineer I</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Organization</div>
+        <div class="info-card-value" style="color:var(--barracuda)">Barracuda Networks</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Location</div>
+        <div class="info-card-value">Bangalore, Karnataka, India</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Email</div>
+        <div class="info-card-value"><a href="mailto:prathamsk130@gmail.com">prathamsk130@gmail.com</a></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">GitHub</div>
+        <div class="info-card-value"><a href="https://github.com/savarander" target="_blank">github.com/savarander</a></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section id="education" class="py-5">
-  <div class="container" data-aos="zoom-in">
-    <h2 class="text-center mb-4">Education</h2>
-    <ul>
-      <li><strong>B.E. in AI & ML, JNNCE</strong> (2021–2025)</li>
-      <li><strong>Pre-University, Aadichunchanagiri PU</strong> (2019–2021)</li>
-    </ul>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <div class="section-tag"><span class="num">02.</span> Technical Arsenal</div>
+    <h2 class="section-title">Tools & <span class="highlight">Technologies</span></h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-category reveal tilt-card">
+      <div class="skill-icon blue">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0078d4" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      </div>
+      <div class="skill-cat-title">Programming & Core</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">C</span>
+        <span class="skill-tag">REST APIs</span>
+        <span class="skill-tag">Git</span>
+      </div>
+    </div>
+    <div class="skill-category reveal tilt-card">
+      <div class="skill-icon green">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06d6a0" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.57-3.25 3.92L12 22"/><path d="M12 2a4 4 0 0 0-4 4c0 1.95 1.4 3.57 3.25 3.92"/></svg>
+      </div>
+      <div class="skill-cat-title">AI/ML Frameworks</div>
+      <div class="skill-tags">
+        <span class="skill-tag">PyTorch</span>
+        <span class="skill-tag">TensorFlow</span>
+        <span class="skill-tag">BERT</span>
+        <span class="skill-tag">Scikit-Learn</span>
+        <span class="skill-tag">SpaCy</span>
+        <span class="skill-tag">MLFlow</span>
+        <span class="skill-tag">Hugging Face</span>
+      </div>
+    </div>
+    <div class="skill-category reveal tilt-card">
+      <div class="skill-icon purple">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      </div>
+      <div class="skill-cat-title">Domains & Specializations</div>
+      <div class="skill-tags">
+        <span class="skill-tag">NLP</span>
+        <span class="skill-tag">Deep Learning</span>
+        <span class="skill-tag">Computer Vision</span>
+        <span class="skill-tag">MLOps</span>
+        <span class="skill-tag">GenAI</span>
+        <span class="skill-tag">Agentic AI</span>
+        <span class="skill-tag">Threat Intelligence</span>
+      </div>
+    </div>
+    <div class="skill-category reveal tilt-card">
+      <div class="skill-icon teal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+      </div>
+      <div class="skill-cat-title">Data & Infrastructure</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Databricks</span>
+        <span class="skill-tag">MongoDB</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">Flask</span>
+        <span class="skill-tag">Streamlit</span>
+        <span class="skill-tag">PowerBI</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<section id="contact" class="bg-dark text-white py-5">
-  <div class="container" data-aos="fade-up">
-    <h2 class="text-center mb-4">Contact</h2>
-    <p class="text-center">📞 +91 7204530997 | 📧 <a href="mailto:prathamsk130@gmail.com" class="text-white">prathamsk130@gmail.com</a></p>
+<!-- WAVE BEFORE EXPERIENCE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="height:60px">
+    <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z"
+          fill="rgba(0,120,212,0.03)"/>
+  </svg>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="section-water" style="background:rgba(0,120,212,0.015)">
+  <div class="section-header reveal">
+    <div class="section-tag"><span class="num">03.</span> Career Journey</div>
+    <h2 class="section-title">Professional <span class="highlight">Experience</span></h2>
+  </div>
+  <div class="timeline">
+    <!-- Barracuda - ML Engineer -->
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot barracuda-dot"></div>
+      <div class="timeline-card barracuda-card">
+        <div class="timeline-card-header">
+          <div class="timeline-date barracuda-date">Sep 2026 — Present</div>
+          <div class="timeline-company-badge barracuda-badge-sm">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Barracuda
+          </div>
+        </div>
+        <h3 class="timeline-role">Machine Learning Engineer I</h3>
+        <div class="timeline-company barracuda-name">Barracuda Networks</div>
+        <div class="timeline-location">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Bangalore, Karnataka
+        </div>
+        <ul class="timeline-desc">
+          <li>Spearheaded the design and deployment of scalable machine learning models and intelligent automation pipelines to enhance core product capabilities across the security platform.</li>
+          <li>Engineered advanced NLP and GenAI-powered solutions that significantly improved threat detection accuracy and streamlined security operations for enterprise clients.</li>
+          <li>Optimized end-to-end ML workflows — from data ingestion and feature engineering to model training, evaluation, and production monitoring — ensuring reliability at scale.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Barracuda - Threat Analyst -->
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot barracuda-dot"></div>
+      <div class="timeline-card barracuda-card">
+        <div class="timeline-card-header">
+          <div class="timeline-date barracuda-date">Jun 2025 — Aug 2026</div>
+          <div class="timeline-company-badge barracuda-badge-sm">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Barracuda
+          </div>
+        </div>
+        <h3 class="timeline-role">Associate Threat Analyst</h3>
+        <div class="timeline-company barracuda-name">Barracuda Networks</div>
+        <div class="timeline-location">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Bangalore, Karnataka
+        </div>
+        <ul class="timeline-desc">
+          <li>Played an active role in ML development and SOC operations, focusing on identification and mitigation of advanced email-borne threats and sophisticated phishing campaigns.</li>
+          <li>Spearheaded the development of a Generative AI-powered Email Threat Analysis tool during a corporate hackathon — bridging AI/ML theory with practical security applications.</li>
+          <li>Continuously refined detection logic and threat intelligence workflows to stay ahead of evolving attack vectors in a fast-paced enterprise environment.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DRDO -->
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot drdo-dot"></div>
+      <div class="timeline-card drdo-card">
+        <div class="timeline-card-header">
+          <div class="timeline-date drdo-date">Feb 2025 — May 2025</div>
+          <div class="timeline-company-badge drdo-badge-sm">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            DRDO
+          </div>
+        </div>
+        <h3 class="timeline-role">Project Trainee — Defense Research</h3>
+        <div class="timeline-company drdo-name">Center for AI & Robotics (CAIR), DRDO</div>
+        <div class="timeline-location">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Bangalore, Karnataka
+        </div>
+        <ul class="timeline-desc">
+          <li>Researched Image Segmentation Models and advanced Data Fusion techniques for national defense applications.</li>
+          <li>Worked with satellite SAR data and built image segmentation models for geo-spatial analysis under DRDO's strategic programs.</li>
+          <li>Implemented physics-based loss functions for Data Fusion training, achieving measurable improvements in model accuracy over conventional approaches.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Resolute AI -->
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot resolute-dot"></div>
+      <div class="timeline-card resolute-card">
+        <div class="timeline-card-header">
+          <div class="timeline-date resolute-date">May 2024 — Nov 2024</div>
+          <div class="timeline-company-badge resolute-badge-sm">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Resolute AI
+          </div>
+        </div>
+        <h3 class="timeline-role">Data Science Intern</h3>
+        <div class="timeline-company resolute-name">Resolute AI Softwares</div>
+        <div class="timeline-location">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Bangalore, Karnataka
+        </div>
+        <ul class="timeline-desc">
+          <li>Conducted comprehensive data analysis and built insightful visualizations using PowerBI, Matplotlib, and Seaborn for data-driven decision making.</li>
+          <li>Developed strong analytical and problem-solving skills working across NLP, EDA, Machine Learning, and Image Processing in a fast-paced startup environment.</li>
+          <li>Collaborated with the Quality Assurance team to build and deploy Streamlit-based ML applications.</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
-<footer class="bg-black text-white text-center py-3">
-  © 2025 Pratham K Gujjar. All rights reserved.
+<!-- WAVE AFTER EXPERIENCE -->
+<div class="wave-divider wave-divider-flip">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="height:60px">
+    <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z"
+          fill="rgba(0,120,212,0.03)"/>
+  </svg>
+</div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <div class="section-tag"><span class="num">04.</span> Academic Foundation</div>
+    <h2 class="section-title">Education & <span class="highlight">Academics</span></h2>
+  </div>
+  <div class="edu-cards">
+    <div class="edu-card reveal">
+      <div class="edu-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5"/></svg>
+      </div>
+      <div>
+        <div class="edu-degree">Bachelor of Engineering — AI & Machine Learning</div>
+        <div class="edu-school">JNN College of Engineering, Shimoga</div>
+        <div class="edu-year">2021 — 2025</div>
+      </div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <div>
+        <div class="edu-degree">Pre-University Education</div>
+        <div class="edu-school">Sri Aadichunchanagiri (Ind) PU College</div>
+        <div class="edu-year">2019 — 2021</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-header reveal">
+    <div class="section-tag"><span class="num">05.</span> Credentials & Recognition</div>
+    <h2 class="section-title">Certifications & <span class="highlight">Achievements</span></h2>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-card reveal">
+      <div class="cert-badge azure">Microsoft</div>
+      <div class="cert-name">Azure Fundamentals</div>
+      <div class="cert-date">IIIT-Bangalore &middot; Jan 2025</div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-badge nvidia">NVIDIA</div>
+      <div class="cert-name">Fundamentals of Deep Learning</div>
+      <div class="cert-date">NVIDIA DLI &middot; Dec 2024</div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-badge isro">ISRO</div>
+      <div class="cert-name">AI/ML for Geospatial Data</div>
+      <div class="cert-date">ISRO &middot; Aug 2024</div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-badge hack">Hackathon</div>
+      <div class="cert-name">Runner Up — HackForHire 24hrs</div>
+      <div class="cert-date">Jul 2024</div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities">
+  <div class="section-header reveal">
+    <div class="section-tag"><span class="num">06.</span> Leadership & Community</div>
+    <h2 class="section-title">Extracurricular <span class="highlight">Activities</span></h2>
+  </div>
+  <div class="activities-list">
+    <div class="activity-item reveal">
+      <span class="activity-name">Co-Founder & Tech Lead — TechForge Club</span>
+      <span class="activity-period">Oct 2023</span>
+    </div>
+    <div class="activity-item reveal">
+      <span class="activity-name">Vice President — JNNCE ACM Student Chapter</span>
+      <span class="activity-period">2023 — 2024</span>
+    </div>
+    <div class="activity-item reveal">
+      <span class="activity-name">Webmaster — JNNCE ACM Student Chapter</span>
+      <span class="activity-period">2022 — 2023</span>
+    </div>
+    <div class="activity-item reveal">
+      <span class="activity-name">Participant — E-Yantra Robotics Competition</span>
+      <span class="activity-period">Apr 2022</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="section-header reveal">
+    <div class="section-tag"><span class="num">07.</span> Let's Connect</div>
+    <h2 class="section-title">Get In <span class="highlight">Touch</span></h2>
+  </div>
+  <p class="reveal" style="color:var(--text2);max-width:550px;margin:0 auto 3rem;line-height:1.8;font-size:1rem;">
+    I'm always open to discussing new opportunities, interesting projects, or collaborations in AI/ML and Cybersecurity.
+  </p>
+  <div class="contact-links reveal">
+    <a href="mailto:prathamsk130@gmail.com" class="contact-card">
+      <div class="contact-card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div class="contact-card-label">Email</div>
+      <div class="contact-card-value">prathamsk130@gmail.com</div>
+    </a>
+    <a href="tel:+917204530997" class="contact-card">
+      <div class="contact-card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
+      <div class="contact-card-label">Phone</div>
+      <div class="contact-card-value">+91 7204530997</div>
+    </a>
+    <a href="https://linkedin.com/in/pratham-k-gujjar" target="_blank" class="contact-card">
+      <div class="contact-card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </div>
+      <div class="contact-card-label">LinkedIn</div>
+      <div class="contact-card-value">pratham-k-gujjar</div>
+    </a>
+    <a href="https://github.com/savarander" target="_blank" class="contact-card">
+      <div class="contact-card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      </div>
+      <div class="contact-card-label">GitHub</div>
+      <div class="contact-card-value">savarander</div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-wave">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <p>Designed with <span class="heart">&hearts;</span> by Pratham K Gujjar &copy; 2026</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-  AOS.init();
+// ====== LOADER ======
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('hidden'), 2200);
+});
+
+// ====== PARTICLES ======
+(function(){
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+  function resize(){ w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize); resize();
+  class Particle {
+    constructor(){this.reset()}
+    reset(){
+      this.x = Math.random()*w; this.y = Math.random()*h;
+      this.vx = (Math.random()-.5)*.25; this.vy = (Math.random()-.5)*.25;
+      this.r = Math.random()*1.5+.5;
+      this.alpha = Math.random()*.25+.05;
+      this.color = Math.random()>.5 ? '0,120,212' : '0,180,216';
+    }
+    update(){
+      this.x += this.vx; this.y += this.vy;
+      if(this.x<0||this.x>w||this.y<0||this.y>h) this.reset();
+    }
+    draw(){
+      ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(${this.color},${this.alpha})`; ctx.fill();
+    }
+  }
+  for(let i=0;i<70;i++) particles.push(new Particle());
+  function connectParticles(){
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<130){
+          ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(0,120,212,${.04*(1-dist/130)})`;
+          ctx.lineWidth=.5; ctx.stroke();
+        }
+      }
+    }
+  }
+  function animate(){
+    ctx.clearRect(0,0,w,h);
+    particles.forEach(p=>{p.update();p.draw()});
+    connectParticles();
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ====== WATER WAVES ======
+(function(){
+  const canvas = document.getElementById('waterCanvas');
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  function resize(){ w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize); resize();
+  let t = 0;
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    for(let i=0;i<3;i++){
+      ctx.beginPath();
+      ctx.moveTo(0,h);
+      for(let x=0;x<=w;x+=4){
+        const y = h*0.85 + Math.sin(x*0.003+t*(0.5+i*0.2)+i*2)*15*(i+1)
+                  + Math.sin(x*0.007+t*0.3)*8;
+        ctx.lineTo(x,y);
+      }
+      ctx.lineTo(w,h); ctx.closePath();
+      ctx.fillStyle = `rgba(0,${100+i*20},${180+i*20},${0.008-i*0.002})`;
+      ctx.fill();
+    }
+    t += 0.015;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ====== CURSOR GLOW ======
+const glow = document.getElementById('cursorGlow');
+let mouseX=0, mouseY=0, glowX=0, glowY=0;
+document.addEventListener('mousemove', e => { mouseX=e.clientX; mouseY=e.clientY; });
+function animateGlow(){
+  glowX += (mouseX - glowX) * .06;
+  glowY += (mouseY - glowY) * .06;
+  glow.style.left = glowX + 'px';
+  glow.style.top = glowY + 'px';
+  requestAnimationFrame(animateGlow);
+}
+animateGlow();
+
+// ====== SCROLL REVEAL ======
+const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if(entry.isIntersecting){
+      setTimeout(() => entry.target.classList.add('active'), i * 80);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// ====== COUNTER ANIMATION ======
+const counters = document.querySelectorAll('.stat-number');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      const el = entry.target;
+      const target = parseInt(el.dataset.count);
+      let current = 0;
+      const increment = target / 60;
+      const timer = setInterval(() => {
+        current += increment;
+        if(current >= target){ current = target; clearInterval(timer); }
+        el.textContent = Math.floor(current) + '+';
+      }, 30);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+counters.forEach(c => counterObserver.observe(c));
+
+// ====== NAV ACTIVE LINK ======
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY + 200;
+  sections.forEach(section => {
+    const top = section.offsetTop;
+    const height = section.offsetHeight;
+    const id = section.getAttribute('id');
+    const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+    if(link){
+      if(scrollY >= top && scrollY < top + height){
+        document.querySelectorAll('.nav-links a').forEach(a => { a.style.color = ''; a.querySelector('::after') });
+        link.style.color = 'var(--barracuda-teal)';
+      }
+    }
+  });
+});
+
+// ====== SMOOTH SCROLL ======
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e){
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ====== TILT EFFECT ON SKILL CARDS ======
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / 18;
+    const rotateY = (centerX - x) / 18;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+  });
+});
+
+// ====== MAGNETIC BUTTONS ======
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width/2;
+    const y = e.clientY - rect.top - rect.height/2;
+    btn.style.transform = `translate(${x*.15}px, ${y*.15}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = 'translate(0,0)';
+  });
+});
+
+// ====== NAV STATUS ROTATION ======
+const statusEl = document.querySelector('.nav-status');
+const statusTexts = ['Available', 'ML Engineer @ Barracuda', 'Building AI Systems', 'Bangalore, India'];
+let statusIndex = 0;
+setInterval(() => {
+  statusIndex = (statusIndex + 1) % statusTexts.length;
+  statusEl.style.opacity = 0;
+  setTimeout(() => {
+    statusEl.innerHTML = `<span class="dot"></span> ${statusTexts[statusIndex]}`;
+    statusEl.style.opacity = 1;
+  }, 400);
+}, 4000);
+statusEl.style.transition = 'opacity .4s';
+
+// ====== PARALLAX ON SCROLL ======
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const heroContent = document.querySelector('.hero-content');
+  const heroPhoto = document.querySelector('.hero-photo-wrapper');
+  if(heroContent && scrolled < window.innerHeight){
+    heroContent.style.transform = `translateY(${scrolled * 0.25}px)`;
+    heroContent.style.opacity = 1 - scrolled / (window.innerHeight * 0.7);
+  }
+  if(heroPhoto && scrolled < window.innerHeight){
+    heroPhoto.style.transform = `translateY(${scrolled * 0.15}px)`;
+    heroPhoto.style.opacity = 1 - scrolled / (window.innerHeight * 0.8);
+  }
+});
 </script>
 </body>
 </html>
